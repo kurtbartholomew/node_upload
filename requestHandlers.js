@@ -1,6 +1,7 @@
-var exec = require("child_process").exec;
+var querystring = require("querystring");
+// var exec = require("child_process").exec;
 
-function start(response) {
+function start(response, postData) {
 	console.log("Request handler 'start' was called.");
 
 	// exec("find /", { timeout: 10000, maxBuffer: 20000*1024},
@@ -34,10 +35,11 @@ function start(response) {
 	response.end();
 }
 
-function upload(response) {
+function upload(response, postData) {
 	console.log("Request handler 'upload' was called.");
 	response.writeHead(200, {"Content-Type": "text/plain"});
-	response.write("Hello Upload");
+	response.write("You've sent the text: " +
+	querystring.parse(postData).text);
 	response.end();
 }
 exports.start = start;
